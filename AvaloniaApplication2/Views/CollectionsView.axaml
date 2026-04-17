@@ -18,7 +18,7 @@
                  Height="38"
                  VerticalContentAlignment="Center"
                  Watermark="Поиск коллекции"
-                 Text="{Binding searchText}" />
+                 Text="{Binding SearchText}" />
 
         <Button Grid.Column="1"
                 Height="38"
@@ -74,15 +74,15 @@
                     VerticalAlignment="Center">
               <TextBlock FontSize="12"
                          Foreground="#FF555555"
-                         Text="{Binding totalCount, StringFormat='Всего: {0}'}" />
+                         Text="{Binding TotalCount, StringFormat='Всего: {0}'}" />
             </Border>
           </Grid>
 
           <ScrollViewer Grid.Row="1"
                         VerticalScrollBarVisibility="Auto"
                         HorizontalScrollBarVisibility="Disabled">
-            <ListBox ItemsSource="{Binding items}"
-                     SelectedItem="{Binding selectedItem}"
+            <ListBox ItemsSource="{Binding Items}"
+                     SelectedItem="{Binding SelectedItem}"
                      Background="Transparent"
                      BorderThickness="0">
               <ListBox.ItemTemplate>
@@ -186,7 +186,7 @@
                          VerticalAlignment="Center"
                          FontWeight="SemiBold"
                          Foreground="#FF333333"
-                         Text="{Binding currentPage, StringFormat='Страница: {0}'}" />
+                         Text="{Binding CurrentPage, StringFormat='Страница: {0}'}" />
 
               <TextBlock Grid.Column="4"
                          VerticalAlignment="Center"
@@ -196,7 +196,7 @@
               <TextBlock Grid.Column="5"
                          VerticalAlignment="Center"
                          Foreground="#FF333333"
-                         Text="{Binding totalPages}" />
+                         Text="{Binding TotalPages}" />
             </Grid>
           </Border>
         </Grid>
@@ -227,21 +227,21 @@
                     BorderThickness="1">
               <StackPanel Spacing="4">
                 <TextBlock Foreground="#FF555555"
-                           Text="{Binding editId, StringFormat='ID: {0}'}" />
+                           Text="{Binding EditId, StringFormat='ID: {0}'}" />
                 <TextBlock Foreground="#FF555555"
-                           Text="{Binding editLastModifiedAt, StringFormat='Последнее изменение: {0:dd.MM.yyyy HH:mm}'}" />
+                           Text="{Binding EditLastModifiedAt, StringFormat='Последнее изменение: {0:dd.MM.yyyy HH:mm}'}" />
               </StackPanel>
             </Border>
 
             <TextBlock FontWeight="SemiBold"
                        Text="Название коллекции" />
-            <TextBox Text="{Binding editName}"
+            <TextBox Text="{Binding EditName}"
                      Watermark="Введите название" />
 
             <TextBlock FontWeight="SemiBold"
                        Text="Направление" />
-            <ComboBox ItemsSource="{Binding directionLookupItems}"
-                      SelectedValue="{Binding editDirectionId}"
+            <ComboBox ItemsSource="{Binding DirectionLookupItems}"
+                      SelectedValue="{Binding EditDirectionId}"
                       SelectedValueBinding="{Binding id}">
               <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -256,7 +256,7 @@
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
                      VerticalContentAlignment="Top"
-                     Text="{Binding editDescription}"
+                     Text="{Binding EditDescription}"
                      Watermark="Введите описание коллекции" />
 
             <Border Padding="12"
@@ -266,7 +266,7 @@
                     BorderThickness="1">
               <TextBlock Foreground="#FF555555"
                          TextWrapping="Wrap"
-                         Text="{Binding statusMessage}" />
+                         Text="{Binding StatusMessage}" />
             </Border>
 
             <Grid ColumnDefinitions="*,*"
@@ -308,13 +308,13 @@
                    VerticalAlignment="Center"
                    Foreground="#FF4A4A4A"
                    TextWrapping="Wrap"
-                   Text="{Binding statusMessage}" />
+                   Text="{Binding StatusMessage}" />
 
         <TextBlock Grid.Column="1"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Right"
                    Foreground="#FF4A4A4A"
-                   Text="{Binding totalCount, StringFormat='Записей: {0}'}" />
+                   Text="{Binding TotalCount, StringFormat='Записей: {0}'}" />
       </Grid>
     </Border>
   </Grid>

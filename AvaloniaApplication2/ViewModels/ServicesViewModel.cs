@@ -82,13 +82,13 @@ public partial class ServicesViewModel : ViewModelBase
         sortAscending = !string.Equals(defaultSort, "alphabetDesc", StringComparison.OrdinalIgnoreCase);
     }
 
-    public string pageInfo => $"{currentPage}/{Math.Max(1, totalPages)}";
+    public string pageInfo => $"{CurrentPage}/{Math.Max(1, TotalPages)}";
 
-    public bool canGoPrevious => currentPage > 1;
+    public bool canGoPrevious => CurrentPage > 1;
 
-    public bool canGoNext => currentPage < totalPages;
+    public bool canGoNext => CurrentPage < TotalPages;
 
-    public bool isNewRecord => editorId == 0;
+    public bool isNewRecord => EditorId == 0;
 
     partial void OnSelectedItemChanged(ServiceListItem? value)
     {
@@ -128,46 +128,46 @@ public partial class ServicesViewModel : ViewModelBase
     [RelayCommand]
     private async Task SearchAsync()
     {
-        currentPage = 1;
+        CurrentPage = 1;
         await LoadPageAsync();
     }
 
     [RelayCommand]
     private async Task ToggleSortAsync()
     {
-        sortAscending = !sortAscending;
-        currentPage = 1;
+        SortAscending = !SortAscending;
+        CurrentPage = 1;
         await LoadPageAsync();
     }
 
     [RelayCommand]
     private async Task PreviousPageAsync()
     {
-        if (currentPage <= 1)
+        if (CurrentPage <= 1)
         {
             return;
         }
 
-        currentPage--;
+        CurrentPage--;
         await LoadPageAsync();
     }
 
     [RelayCommand]
     private async Task NextPageAsync()
     {
-        if (currentPage >= totalPages)
+        if (CurrentPage >= TotalPages)
         {
             return;
         }
 
-        currentPage++;
+        CurrentPage++;
         await LoadPageAsync();
     }
 
     [RelayCommand]
     private async Task SaveAsync()
     {
-        if (isBusy)
+        if (IsBusy)
         {
             return;
         }
@@ -179,34 +179,34 @@ public partial class ServicesViewModel : ViewModelBase
 
         try
         {
-            isBusy = true;
-            statusMessage = "Сохранение услуги...";
+            IsBusy = true;
+            StatusMessage = "Сохранение услуги...";
 
             var savedId = await catalogDataService.SaveServiceAsync(new ServiceEditorModel
             {
-                id = editorId,
-                collectionId = editorCollectionId,
-                name = editorName,
-                description = editorDescription,
-                durationMinutes = editorDurationMinutes,
-                basePrice = editorBasePrice,
-                isActive = editorIsActive,
-                imagePath = string.IsNullOrWhiteSpace(editorImagePath) ? null : editorImagePath
+                id = EditorId,
+                collectionId = EditorCollectionId,
+                name = EditorName,
+                description = EditorDescription,
+                durationMinutes = EditorDurationMinutes,
+                basePrice = EditorBasePrice,
+                isActive = EditorIsActive,
+                imagePath = string.IsNullOrWhiteSpace(EditorImagePath) ? null : EditorImagePath
             });
 
             await LoadLookupAsync();
             await LoadPageAsync();
             await LoadEditorAsync(savedId);
 
-            statusMessage = "Услуга сохранена";
+            StatusMessage = "Услуга сохранена";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка сохранения: {exception.Message}";
+            StatusMessage = $"Ошибка сохранения: {exception.Message}";
         }
         finally
         {
-            isBusy = false;
+            IsBusy = false;
         }
     }
 
@@ -214,41 +214,41 @@ public partial class ServicesViewModel : ViewModelBase
     private void CreateNew()
     {
         ClearEditor();
-        statusMessage = "Режим добавления новой услуги";
+        StatusMessage = "Режим добавления новой услуги";
     }
 
     [RelayCommand]
     private async Task DeleteAsync()
     {
-        if (isBusy || editorId == 0)
+        if (IsBusy || EditorId == 0)
         {
             return;
         }
 
         try
         {
-            isBusy = true;
-            statusMessage = "Удаление услуги...";
+            IsBusy = true;
+            StatusMessage = "Удаление услуги...";
 
-            await catalogDataService.DeleteServiceAsync(editorId);
+            await catalogDataService.DeleteServiceAsync(EditorId);
 
             ClearEditor();
 
-            if (currentPage > 1 && items.Count == 1)
+            if (CurrentPage > 1 && Items.Count == 1)
             {
-                currentPage--;
+                CurrentPage--;
             }
 
             await LoadPageAsync();
-            statusMessage = "Услуга удалена";
+            StatusMessage = "Услуга удалена";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка удаления: {exception.Message}";
+            StatusMessage = $"Ошибка удаления: {exception.Message}";
         }
         finally
         {
-            isBusy = false;
+            IsBusy = false;
         }
     }
 
@@ -262,11 +262,11 @@ public partial class ServicesViewModel : ViewModelBase
     {
         var lookupItems = await catalogDataService.GetCollectionLookupAsync();
 
-        collectionOptions = new ObservableCollection<LookupItem>(lookupItems);
+        CollectionOptions = new ObservableCollection<LookupItem>(lookupItems);
 
-        if (editorCollectionId == 0 && collectionOptions.Count > 0)
+        if (EditorCollectionId == 0 && CollectionOptions.Count > 0)
         {
-            editorCollectionId = collectionOptions[0].id;
+            EditorCollectionId = CollectionOptions[0].id;
         }
     }
 
@@ -274,51 +274,51 @@ public partial class ServicesViewModel : ViewModelBase
     {
         try
         {
-            isBusy = true;
-            statusMessage = "Загрузка списка услуг...";
+            IsBusy = true;
+            StatusMessage = "Загрузка списка услуг...";
 
             var result = await catalogDataService.GetServicesAsync(
-                searchText,
-                sortAscending,
-                currentPage,
+                SearchText,
+                SortAscending,
+                CurrentPage,
                 pageSize);
 
-            items = new ObservableCollection<ServiceListItem>(result.items);
-            totalCount = result.totalCount;
-            totalPages = Math.Max(1, result.totalPages);
+            Items = new ObservableCollection<ServiceListItem>(result.items);
+            TotalCount = result.totalCount;
+            TotalPages = Math.Max(1, result.totalPages);
 
-            if (currentPage > totalPages)
+            if (CurrentPage > TotalPages)
             {
-                currentPage = totalPages;
+                CurrentPage = TotalPages;
                 result = await catalogDataService.GetServicesAsync(
-                    searchText,
-                    sortAscending,
-                    currentPage,
+                    SearchText,
+                    SortAscending,
+                    CurrentPage,
                     pageSize);
 
-                items = new ObservableCollection<ServiceListItem>(result.items);
-                totalCount = result.totalCount;
-                totalPages = Math.Max(1, result.totalPages);
+                Items = new ObservableCollection<ServiceListItem>(result.items);
+                TotalCount = result.totalCount;
+                TotalPages = Math.Max(1, result.totalPages);
             }
 
-            if (editorId != 0)
+            if (EditorId != 0)
             {
-                var currentItem = items.FirstOrDefault(item => item.id == editorId);
+                var currentItem = Items.FirstOrDefault(item => item.id == EditorId);
                 if (currentItem is not null)
                 {
-                    selectedItem = currentItem;
+                    SelectedItem = currentItem;
                 }
             }
 
-            statusMessage = $"Загружено услуг: {totalCount}";
+            StatusMessage = $"Загружено услуг: {TotalCount}";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка загрузки услуг: {exception.Message}";
+            StatusMessage = $"Ошибка загрузки услуг: {exception.Message}";
         }
         finally
         {
-            isBusy = false;
+            IsBusy = false;
         }
     }
 
@@ -326,67 +326,67 @@ public partial class ServicesViewModel : ViewModelBase
     {
         try
         {
-            isBusy = true;
-            statusMessage = "Загрузка выбранной услуги...";
+            IsBusy = true;
+            StatusMessage = "Загрузка выбранной услуги...";
 
             var model = await catalogDataService.GetServiceByIdAsync(id);
             if (model is null)
             {
-                statusMessage = "Выбранная услуга не найдена";
+                StatusMessage = "Выбранная услуга не найдена";
                 return;
             }
 
-            editorId = model.id;
-            editorCollectionId = model.collectionId;
-            editorName = model.name;
-            editorDescription = model.description;
-            editorDurationMinutes = model.durationMinutes;
-            editorBasePrice = model.basePrice;
-            editorIsActive = model.isActive;
-            editorImagePath = model.imagePath ?? string.Empty;
-            editorLastModifiedAt = model.lastModifiedAt;
+            EditorId = model.id;
+            EditorCollectionId = model.collectionId;
+            EditorName = model.name;
+            EditorDescription = model.description;
+            EditorDurationMinutes = model.durationMinutes;
+            EditorBasePrice = model.basePrice;
+            EditorIsActive = model.isActive;
+            EditorImagePath = model.imagePath ?? string.Empty;
+            EditorLastModifiedAt = model.lastModifiedAt;
 
-            statusMessage = $"Выбрана услуга: {editorName}";
+            StatusMessage = $"Выбрана услуга: {EditorName}";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка загрузки услуги: {exception.Message}";
+            StatusMessage = $"Ошибка загрузки услуги: {exception.Message}";
         }
         finally
         {
-            isBusy = false;
+            IsBusy = false;
         }
     }
 
     private bool ValidateEditor()
     {
-        if (editorCollectionId <= 0)
+        if (EditorCollectionId <= 0)
         {
-            statusMessage = "Выберите коллекцию";
+            StatusMessage = "Выберите коллекцию";
             return false;
         }
 
-        if (string.IsNullOrWhiteSpace(editorName))
+        if (string.IsNullOrWhiteSpace(EditorName))
         {
-            statusMessage = "Введите название услуги";
+            StatusMessage = "Введите название услуги";
             return false;
         }
 
-        if (string.IsNullOrWhiteSpace(editorDescription))
+        if (string.IsNullOrWhiteSpace(EditorDescription))
         {
-            statusMessage = "Введите описание услуги";
+            StatusMessage = "Введите описание услуги";
             return false;
         }
 
-        if (editorDurationMinutes <= 0)
+        if (EditorDurationMinutes <= 0)
         {
-            statusMessage = "Длительность должна быть больше 0";
+            StatusMessage = "Длительность должна быть больше 0";
             return false;
         }
 
-        if (editorBasePrice < 0)
+        if (EditorBasePrice < 0)
         {
-            statusMessage = "Стоимость не может быть отрицательной";
+            StatusMessage = "Стоимость не может быть отрицательной";
             return false;
         }
 
@@ -395,15 +395,15 @@ public partial class ServicesViewModel : ViewModelBase
 
     private void ClearEditor()
     {
-        editorId = 0;
-        editorCollectionId = collectionOptions.FirstOrDefault()?.id ?? 0;
-        editorName = string.Empty;
-        editorDescription = string.Empty;
-        editorDurationMinutes = 60;
-        editorBasePrice = 0;
-        editorIsActive = true;
-        editorImagePath = string.Empty;
-        editorLastModifiedAt = null;
-        selectedItem = null;
+        EditorId = 0;
+        EditorCollectionId = CollectionOptions.FirstOrDefault()?.id ?? 0;
+        EditorName = string.Empty;
+        EditorDescription = string.Empty;
+        EditorDurationMinutes = 60;
+        EditorBasePrice = 0;
+        EditorIsActive = true;
+        EditorImagePath = string.Empty;
+        EditorLastModifiedAt = null;
+        SelectedItem = null;
     }
 }

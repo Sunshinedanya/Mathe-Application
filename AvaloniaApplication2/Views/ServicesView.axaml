@@ -16,7 +16,7 @@
                  Height="38"
                  VerticalContentAlignment="Center"
                  Watermark="Поиск услуги, коллекции или направления"
-                 Text="{Binding searchText}" />
+                 Text="{Binding SearchText}" />
 
         <Button Grid.Column="1"
                 MinWidth="110"
@@ -74,8 +74,8 @@
           </Grid>
 
           <ListBox Grid.Row="1"
-                   ItemsSource="{Binding items}"
-                   SelectedItem="{Binding selectedItem}"
+                   ItemsSource="{Binding Items}"
+                   SelectedItem="{Binding SelectedItem}"
                    Background="Transparent"
                    BorderThickness="0">
             <ListBox.ItemTemplate>
@@ -211,12 +211,12 @@
               <TextBlock Grid.Column="4"
                          VerticalAlignment="Center"
                          Foreground="#FF666666"
-                         Text="{Binding totalCount, StringFormat='Всего: {0}'}" />
+                         Text="{Binding TotalCount, StringFormat='Всего: {0}'}" />
 
               <TextBlock Grid.Column="5"
                          VerticalAlignment="Center"
                          Foreground="#FF666666"
-                         Text="{Binding statusMessage}" />
+                         Text="{Binding StatusMessage}" />
             </Grid>
           </Border>
         </Grid>
@@ -237,11 +237,11 @@
                        Text="Редактор услуги" />
 
             <TextBlock Foreground="#FF666666"
-                       Text="{Binding editorLastModifiedAt, StringFormat='Последнее изменение: {0:dd.MM.yyyy HH:mm}'}" />
+                       Text="{Binding EditorLastModifiedAt, StringFormat='Последнее изменение: {0:dd.MM.yyyy HH:mm}'}" />
 
             <TextBlock Text="Коллекция" />
-            <ComboBox ItemsSource="{Binding collectionOptions}"
-                      SelectedValue="{Binding editorCollectionId}"
+            <ComboBox ItemsSource="{Binding CollectionOptions}"
+                      SelectedValue="{Binding EditorCollectionId}"
                       SelectedValueBinding="{Binding id}">
               <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -251,32 +251,32 @@
             </ComboBox>
 
             <TextBlock Text="Название услуги" />
-            <TextBox Text="{Binding editorName}" />
+            <TextBox Text="{Binding EditorName}" />
 
             <TextBlock Text="Описание" />
             <TextBox MinHeight="120"
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
-                     Text="{Binding editorDescription}" />
+                     Text="{Binding EditorDescription}" />
 
             <Grid ColumnDefinitions="*,*"
                   ColumnSpacing="10">
               <StackPanel Spacing="6">
                 <TextBlock Text="Длительность, мин." />
-                <TextBox Text="{Binding editorDurationMinutes}" />
+                <TextBox Text="{Binding EditorDurationMinutes}" />
               </StackPanel>
 
               <StackPanel Grid.Column="1"
                           Spacing="6">
                 <TextBlock Text="Стоимость" />
-                <TextBox Text="{Binding editorBasePrice}" />
+                <TextBox Text="{Binding EditorBasePrice}" />
               </StackPanel>
             </Grid>
 
             <TextBlock Text="Путь к изображению" />
-            <TextBox Text="{Binding editorImagePath}" />
+            <TextBox Text="{Binding EditorImagePath}" />
 
-            <CheckBox IsChecked="{Binding editorIsActive}"
+            <CheckBox IsChecked="{Binding EditorIsActive}"
                       Content="Активная услуга" />
 
             <Border Padding="10"
@@ -286,9 +286,9 @@
                     BorderThickness="1">
               <StackPanel Spacing="5">
                 <TextBlock Foreground="#FF555555"
-                           Text="{Binding editorId, StringFormat='ID: {0}'}" />
+                           Text="{Binding EditorId, StringFormat='ID: {0}'}" />
                 <TextBlock Foreground="#FF555555"
-                           Text="{Binding statusMessage}" />
+                           Text="{Binding StatusMessage}" />
               </StackPanel>
             </Border>
 

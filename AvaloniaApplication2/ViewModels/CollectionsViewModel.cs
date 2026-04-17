@@ -82,205 +82,205 @@ public partial class CollectionsViewModel : ViewModelBase
 
     public async Task LoadAsync()
     {
-        if (isBusy)
+        if (IsBusy)
         {
             return;
         }
 
         try
         {
-            isBusy = true;
-            statusMessage = "Загрузка коллекций...";
+            IsBusy = true;
+            StatusMessage = "Загрузка коллекций...";
 
             await LoadLookupAsync();
 
             var result = await catalogDataService.GetCollectionsAsync(
-                searchText,
-                sortAscending,
-                currentPage,
+                SearchText,
+                SortAscending,
+                CurrentPage,
                 pageSize);
 
-            items = new ObservableCollection<CollectionListItem>(result.items);
-            totalCount = result.totalCount;
-            totalPages = Math.Max(1, result.totalPages);
+            Items = new ObservableCollection<CollectionListItem>(result.items);
+            TotalCount = result.totalCount;
+            TotalPages = Math.Max(1, result.totalPages);
 
-            if (currentPage > totalPages)
+            if (CurrentPage > TotalPages)
             {
-                currentPage = totalPages;
+                CurrentPage = TotalPages;
                 result = await catalogDataService.GetCollectionsAsync(
-                    searchText,
-                    sortAscending,
-                    currentPage,
+                    SearchText,
+                    SortAscending,
+                    CurrentPage,
                     pageSize);
 
-                items = new ObservableCollection<CollectionListItem>(result.items);
-                totalCount = result.totalCount;
-                totalPages = Math.Max(1, result.totalPages);
+                Items = new ObservableCollection<CollectionListItem>(result.items);
+                TotalCount = result.totalCount;
+                TotalPages = Math.Max(1, result.totalPages);
             }
 
-            statusMessage = totalCount == 0
+            StatusMessage = TotalCount == 0
                 ? "Коллекции не найдены"
-                : $"Загружено коллекций: {totalCount}";
+                : $"Загружено коллекций: {TotalCount}";
 
-            if (selectedItem is not null)
+            if (SelectedItem is not null)
             {
-                var updatedSelection = items.FirstOrDefault(item => item.id == selectedItem.id);
+                var updatedSelection = Items.FirstOrDefault(item => item.id == SelectedItem.id);
                 if (updatedSelection is not null)
                 {
-                    selectedItem = updatedSelection;
+                    SelectedItem = updatedSelection;
                 }
             }
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка загрузки коллекций: {exception.Message}";
+            StatusMessage = $"Ошибка загрузки коллекций: {exception.Message}";
         }
         finally
         {
-            isBusy = false;
+            IsBusy = false;
         }
     }
 
     [RelayCommand]
     private async Task SearchAsync()
     {
-        currentPage = 1;
+        CurrentPage = 1;
         await LoadAsync();
     }
 
     [RelayCommand]
     private async Task ToggleSortAsync()
     {
-        sortAscending = !sortAscending;
-        currentPage = 1;
+        SortAscending = !SortAscending;
+        CurrentPage = 1;
         await LoadAsync();
     }
 
     [RelayCommand]
     private async Task NextPageAsync()
     {
-        if (currentPage >= totalPages || isBusy)
+        if (CurrentPage >= TotalPages || IsBusy)
         {
             return;
         }
 
-        currentPage++;
+        CurrentPage++;
         await LoadAsync();
     }
 
     [RelayCommand]
     private async Task PreviousPageAsync()
     {
-        if (currentPage <= 1 || isBusy)
+        if (CurrentPage <= 1 || IsBusy)
         {
             return;
         }
 
-        currentPage--;
+        CurrentPage--;
         await LoadAsync();
     }
 
     [RelayCommand]
     private void CreateNew()
     {
-        editId = 0;
-        editName = string.Empty;
-        editDescription = string.Empty;
-        editLastModifiedAt = null;
-        selectedItem = null;
+        EditId = 0;
+        EditName = string.Empty;
+        EditDescription = string.Empty;
+        EditLastModifiedAt = null;
+        SelectedItem = null;
 
-        if (directionLookupItems.Count > 0)
+        if (DirectionLookupItems.Count > 0)
         {
-            editDirectionId = directionLookupItems[0].id;
+            EditDirectionId = DirectionLookupItems[0].id;
         }
 
-        statusMessage = "Режим добавления новой коллекции";
+        StatusMessage = "Режим добавления новой коллекции";
     }
 
     [RelayCommand]
     private async Task SaveAsync()
     {
-        if (isBusy)
+        if (IsBusy)
         {
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(editName))
+        if (string.IsNullOrWhiteSpace(EditName))
         {
-            statusMessage = "Введите название коллекции";
+            StatusMessage = "Введите название коллекции";
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(editDescription))
+        if (string.IsNullOrWhiteSpace(EditDescription))
         {
-            statusMessage = "Введите описание коллекции";
+            StatusMessage = "Введите описание коллекции";
             return;
         }
 
-        if (editDirectionId <= 0)
+        if (EditDirectionId <= 0)
         {
-            statusMessage = "Выберите направление";
+            StatusMessage = "Выберите направление";
             return;
         }
 
         try
         {
-            isBusy = true;
-            statusMessage = "Сохранение коллекции...";
+            IsBusy = true;
+            StatusMessage = "Сохранение коллекции...";
 
             var id = await catalogDataService.SaveCollectionAsync(new CollectionEditorModel
             {
-                id = editId,
-                directionId = editDirectionId,
-                name = editName,
-                description = editDescription,
-                lastModifiedAt = editLastModifiedAt
+                id = EditId,
+                directionId = EditDirectionId,
+                name = EditName,
+                description = EditDescription,
+                lastModifiedAt = EditLastModifiedAt
             });
 
-            editId = id;
+            EditId = id;
             await LoadAsync();
             await LoadEditorAsync(id);
 
-            selectedItem = items.FirstOrDefault(item => item.id == id);
-            statusMessage = "Коллекция сохранена";
+            SelectedItem = Items.FirstOrDefault(item => item.id == id);
+            StatusMessage = "Коллекция сохранена";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка сохранения: {exception.Message}";
+            StatusMessage = $"Ошибка сохранения: {exception.Message}";
         }
         finally
         {
-            isBusy = false;
+            IsBusy = false;
         }
     }
 
     [RelayCommand]
     private async Task DeleteAsync()
     {
-        if (isBusy || editId <= 0)
+        if (IsBusy || EditId <= 0)
         {
             return;
         }
 
         try
         {
-            isBusy = true;
-            statusMessage = "Удаление коллекции...";
+            IsBusy = true;
+            StatusMessage = "Удаление коллекции...";
 
-            await catalogDataService.DeleteCollectionAsync(editId);
+            await catalogDataService.DeleteCollectionAsync(EditId);
 
             CreateNew();
             await LoadAsync();
 
-            statusMessage = "Коллекция удалена";
+            StatusMessage = "Коллекция удалена";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка удаления: {exception.Message}";
+            StatusMessage = $"Ошибка удаления: {exception.Message}";
         }
         finally
         {
-            isBusy = false;
+            IsBusy = false;
         }
     }
 
@@ -294,27 +294,27 @@ public partial class CollectionsViewModel : ViewModelBase
                 return;
             }
 
-            editId = model.id;
-            editDirectionId = model.directionId;
-            editName = model.name;
-            editDescription = model.description;
-            editLastModifiedAt = model.lastModifiedAt;
-            statusMessage = $"Выбрана коллекция: {model.name}";
+            EditId = model.id;
+            EditDirectionId = model.directionId;
+            EditName = model.name;
+            EditDescription = model.description;
+            EditLastModifiedAt = model.lastModifiedAt;
+            StatusMessage = $"Выбрана коллекция: {model.name}";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка загрузки выбранной коллекции: {exception.Message}";
+            StatusMessage = $"Ошибка загрузки выбранной коллекции: {exception.Message}";
         }
     }
 
     private async Task LoadLookupAsync()
     {
         var directions = await catalogDataService.GetDirectionLookupAsync();
-        directionLookupItems = new ObservableCollection<LookupItem>(directions);
+        DirectionLookupItems = new ObservableCollection<LookupItem>(directions);
 
-        if (editDirectionId <= 0 && directionLookupItems.Count > 0)
+        if (EditDirectionId <= 0 && DirectionLookupItems.Count > 0)
         {
-            editDirectionId = directionLookupItems[0].id;
+            EditDirectionId = DirectionLookupItems[0].id;
         }
     }
 }

@@ -50,74 +50,74 @@ public partial class MainWindowViewModel : ObservableObject
     [RelayCommand]
     private async Task InitializeAsync()
     {
-        if (isBusy)
+        if (IsBusy)
         {
             return;
         }
 
         try
         {
-            isBusy = true;
-            statusMessage = "Подключение к базе данных...";
+            IsBusy = true;
+            StatusMessage = "Подключение к базе данных...";
 
             await catalogDataService.InitializeDatabaseAsync();
 
-            statusMessage = "Загрузка каталога...";
+            StatusMessage = "Загрузка каталога...";
 
             await services.LoadAsync();
             await collections.LoadAsync();
             await directions.LoadAsync();
 
-            statusMessage = "Данные загружены";
+            StatusMessage = "Данные загружены";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка инициализации: {exception.Message}";
+            StatusMessage = $"Ошибка инициализации: {exception.Message}";
         }
         finally
         {
-            isBusy = false;
+            IsBusy = false;
         }
     }
 
     [RelayCommand]
     private void ShowServices()
     {
-        currentSectionViewModel = services;
-        currentSectionTitle = "Услуги";
-        statusMessage = "Открыт раздел услуг";
+        CurrentSectionViewModel = services;
+        CurrentSectionTitle = "Услуги";
+        StatusMessage = "Открыт раздел услуг";
     }
 
     [RelayCommand]
     private void ShowCollections()
     {
-        currentSectionViewModel = collections;
-        currentSectionTitle = "Коллекции";
-        statusMessage = "Открыт раздел коллекций";
+        CurrentSectionViewModel = collections;
+        CurrentSectionTitle = "Коллекции";
+        StatusMessage = "Открыт раздел коллекций";
     }
 
     [RelayCommand]
     private void ShowDirections()
     {
-        currentSectionViewModel = directions;
-        currentSectionTitle = "Направления";
-        statusMessage = "Открыт раздел направлений";
+        CurrentSectionViewModel = directions;
+        CurrentSectionTitle = "Направления";
+        StatusMessage = "Открыт раздел направлений";
     }
 
     [RelayCommand]
     private async Task RefreshCurrentSectionAsync()
     {
-        if (isBusy)
+        if (IsBusy)
         {
             return;
         }
 
         try
         {
-            isBusy = true;
-            statusMessage = "Обновление данных...";
+            IsBusy = true;
+            StatusMessage = "Обновление данных...";
 
-            switch (currentSectionViewModel)
+            switch (CurrentSectionViewModel)
             {
                 case ServicesViewModel currentServices:
                     await currentServices.LoadAsync();
@@ -132,15 +132,15 @@ public partial class MainWindowViewModel : ObservableObject
                     break;
             }
 
-            statusMessage = "Данные обновлены";
+            StatusMessage = "Данные обновлены";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка обновления: {exception.Message}";
+            StatusMessage = $"Ошибка обновления: {exception.Message}";
         }
         finally
         {
-            isBusy = false;
+            IsBusy = false;
         }
     }
 }

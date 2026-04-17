@@ -17,7 +17,7 @@
         <TextBox Grid.Column="0"
                  Height="38"
                  Watermark="Поиск направления"
-                 Text="{Binding searchText}" />
+                 Text="{Binding SearchText}" />
 
         <Button Grid.Column="1"
                 MinWidth="110"
@@ -72,13 +72,13 @@
                     VerticalAlignment="Center">
               <TextBlock FontSize="12"
                          Foreground="#FF555555"
-                         Text="{Binding totalCount, StringFormat='Всего: {0}'}" />
+                         Text="{Binding TotalCount, StringFormat='Всего: {0}'}" />
             </Border>
           </Grid>
 
           <ListBox Grid.Row="1"
-                   ItemsSource="{Binding items}"
-                   SelectedItem="{Binding selectedItem}"
+                   ItemsSource="{Binding Items}"
+                   SelectedItem="{Binding SelectedItem}"
                    Background="Transparent"
                    BorderThickness="0">
             <ListBox.ItemTemplate>
@@ -164,12 +164,12 @@
                          VerticalAlignment="Center"
                          FontWeight="SemiBold"
                          Foreground="#FF303030"
-                         Text="{Binding currentPage, StringFormat='Страница: {0}'}" />
+                         Text="{Binding CurrentPage, StringFormat='Страница: {0}'}" />
 
               <TextBlock Grid.Column="4"
                          VerticalAlignment="Center"
                          Foreground="#FF666666"
-                         Text="{Binding totalPages, StringFormat='из {0}'}" />
+                         Text="{Binding TotalPages, StringFormat='из {0}'}" />
             </Grid>
           </Border>
         </Grid>
@@ -197,17 +197,17 @@
               <StackPanel Spacing="4">
                 <TextBlock FontSize="12"
                            Foreground="#FF666666"
-                           Text="{Binding id, StringFormat='ID: {0}'}" />
+                           Text="{Binding Id, StringFormat='ID: {0}'}" />
                 <TextBlock FontSize="12"
                            Foreground="#FF666666"
-                           Text="{Binding lastModifiedAt, StringFormat='Последнее изменение: {0:dd.MM.yyyy HH:mm}'}" />
+                           Text="{Binding LastModifiedAt, StringFormat='Последнее изменение: {0:dd.MM.yyyy HH:mm}'}" />
               </StackPanel>
             </Border>
 
             <TextBlock FontWeight="SemiBold"
                        Foreground="#FF303030"
                        Text="Название" />
-            <TextBox Text="{Binding name}" />
+            <TextBox Text="{Binding Name}" />
 
             <TextBlock FontWeight="SemiBold"
                        Foreground="#FF303030"
@@ -216,7 +216,7 @@
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
                      VerticalContentAlignment="Top"
-                     Text="{Binding description}" />
+                     Text="{Binding Description}" />
 
             <Border Padding="10"
                     CornerRadius="10"
@@ -225,7 +225,7 @@
                     BorderThickness="1">
               <TextBlock TextWrapping="Wrap"
                          Foreground="#FF606060"
-                         Text="{Binding statusMessage}" />
+                         Text="{Binding StatusMessage}" />
             </Border>
 
             <Grid ColumnDefinitions="*,*"
@@ -261,13 +261,13 @@
       <Grid ColumnDefinitions="*,Auto">
         <TextBlock VerticalAlignment="Center"
                    Foreground="#FF4F4F4F"
-                   Text="{Binding statusMessage}" />
+                   Text="{Binding StatusMessage}" />
 
         <TextBlock Grid.Column="1"
                    VerticalAlignment="Center"
                    FontWeight="SemiBold"
                    Foreground="#FF303030"
-                   Text="{Binding totalCount, StringFormat='Записей: {0}'}" />
+                   Text="{Binding TotalCount, StringFormat='Записей: {0}'}" />
       </Grid>
     </Border>
   </Grid>

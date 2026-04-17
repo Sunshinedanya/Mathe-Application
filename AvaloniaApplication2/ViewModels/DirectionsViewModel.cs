@@ -77,191 +77,191 @@ public partial class DirectionsViewModel : ViewModelBase
     [RelayCommand]
     public async Task LoadAsync()
     {
-        if (isLoading)
+        if (IsLoading)
         {
             return;
         }
 
         try
         {
-            isLoading = true;
-            statusMessage = "Загрузка направлений...";
+            IsLoading = true;
+            StatusMessage = "Загрузка направлений...";
 
             var pageResult = await catalogDataService.GetDirectionsAsync(
-                searchText,
-                sortAscending,
-                currentPage,
+                SearchText,
+                SortAscending,
+                CurrentPage,
                 pageSize);
 
-            items = new ObservableCollection<DirectionListItem>(pageResult.items);
-            totalCount = pageResult.totalCount;
-            totalPages = Math.Max(1, pageResult.totalPages);
+            Items = new ObservableCollection<DirectionListItem>(pageResult.items);
+            TotalCount = pageResult.totalCount;
+            TotalPages = Math.Max(1, pageResult.totalPages);
 
-            if (currentPage > totalPages)
+            if (CurrentPage > TotalPages)
             {
-                currentPage = totalPages;
+                CurrentPage = TotalPages;
                 pageResult = await catalogDataService.GetDirectionsAsync(
-                    searchText,
-                    sortAscending,
-                    currentPage,
+                    SearchText,
+                    SortAscending,
+                    CurrentPage,
                     pageSize);
 
-                items = new ObservableCollection<DirectionListItem>(pageResult.items);
-                totalCount = pageResult.totalCount;
-                totalPages = Math.Max(1, pageResult.totalPages);
+                Items = new ObservableCollection<DirectionListItem>(pageResult.items);
+                TotalCount = pageResult.totalCount;
+                TotalPages = Math.Max(1, pageResult.totalPages);
             }
 
-            if (selectedItem is not null)
+            if (SelectedItem is not null)
             {
-                var currentSelected = items.FirstOrDefault(item => item.id == selectedItem.id);
+                var currentSelected = Items.FirstOrDefault(item => item.id == SelectedItem.id);
                 if (currentSelected is not null)
                 {
-                    selectedItem = currentSelected;
+                    SelectedItem = currentSelected;
                 }
             }
 
-            statusMessage = totalCount == 0
+            StatusMessage = TotalCount == 0
                 ? "Направления не найдены"
-                : $"Загружено направлений: {totalCount}";
+                : $"Загружено направлений: {TotalCount}";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка загрузки направлений: {exception.Message}";
+            StatusMessage = $"Ошибка загрузки направлений: {exception.Message}";
         }
         finally
         {
-            isLoading = false;
+            IsLoading = false;
         }
     }
 
     [RelayCommand]
     private async Task SearchAsync()
     {
-        currentPage = 1;
+        CurrentPage = 1;
         await LoadAsync();
     }
 
     [RelayCommand]
     private async Task ToggleSortAsync()
     {
-        sortAscending = !sortAscending;
-        currentPage = 1;
+        SortAscending = !SortAscending;
+        CurrentPage = 1;
         await LoadAsync();
     }
 
     [RelayCommand]
     private async Task PreviousPageAsync()
     {
-        if (currentPage <= 1)
+        if (CurrentPage <= 1)
         {
             return;
         }
 
-        currentPage--;
+        CurrentPage--;
         await LoadAsync();
     }
 
     [RelayCommand]
     private async Task NextPageAsync()
     {
-        if (currentPage >= totalPages)
+        if (CurrentPage >= TotalPages)
         {
             return;
         }
 
-        currentPage++;
+        CurrentPage++;
         await LoadAsync();
     }
 
     [RelayCommand]
     private void CreateNew()
     {
-        selectedItem = null;
-        id = 0;
-        name = string.Empty;
-        description = string.Empty;
-        lastModifiedAt = null;
-        statusMessage = "Создание нового направления";
+        SelectedItem = null;
+        Id = 0;
+        Name = string.Empty;
+        Description = string.Empty;
+        LastModifiedAt = null;
+        StatusMessage = "Создание нового направления";
     }
 
     [RelayCommand]
     private async Task SaveAsync()
     {
-        if (isLoading)
+        if (IsLoading)
         {
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(name))
+        if (string.IsNullOrWhiteSpace(Name))
         {
-            statusMessage = "Введите название направления";
+            StatusMessage = "Введите название направления";
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(description))
+        if (string.IsNullOrWhiteSpace(Description))
         {
-            statusMessage = "Введите описание направления";
+            StatusMessage = "Введите описание направления";
             return;
         }
 
         try
         {
-            isLoading = true;
-            statusMessage = id == 0
+            IsLoading = true;
+            StatusMessage = Id == 0
                 ? "Добавление направления..."
                 : "Сохранение направления...";
 
             var savedId = await catalogDataService.SaveDirectionAsync(new DirectionEditorModel
             {
-                id = id,
-                name = name,
-                description = description,
-                lastModifiedAt = lastModifiedAt
+                id = Id,
+                name = Name,
+                description = Description,
+                lastModifiedAt = LastModifiedAt
             });
 
-            id = savedId;
+            Id = savedId;
             await LoadAsync();
             await LoadSelectedAsync(savedId);
 
-            statusMessage = "Направление успешно сохранено";
+            StatusMessage = "Направление успешно сохранено";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка сохранения направления: {exception.Message}";
+            StatusMessage = $"Ошибка сохранения направления: {exception.Message}";
         }
         finally
         {
-            isLoading = false;
+            IsLoading = false;
         }
     }
 
     [RelayCommand]
     private async Task DeleteAsync()
     {
-        if (id == 0)
+        if (Id == 0)
         {
-            statusMessage = "Сначала выберите направление";
+            StatusMessage = "Сначала выберите направление";
             return;
         }
 
         try
         {
-            isLoading = true;
-            statusMessage = "Удаление направления...";
+            IsLoading = true;
+            StatusMessage = "Удаление направления...";
 
-            await catalogDataService.DeleteDirectionAsync(id);
+            await catalogDataService.DeleteDirectionAsync(Id);
             CreateNew();
             await LoadAsync();
 
-            statusMessage = "Направление удалено";
+            StatusMessage = "Направление удалено";
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка удаления направления: {exception.Message}";
+            StatusMessage = $"Ошибка удаления направления: {exception.Message}";
         }
         finally
         {
-            isLoading = false;
+            IsLoading = false;
         }
     }
 
@@ -275,14 +275,14 @@ public partial class DirectionsViewModel : ViewModelBase
                 return;
             }
 
-            id = model.id;
-            name = model.name;
-            description = model.description;
-            lastModifiedAt = model.lastModifiedAt;
+            Id = model.id;
+            Name = model.name;
+            Description = model.description;
+            LastModifiedAt = model.lastModifiedAt;
         }
         catch (Exception exception)
         {
-            statusMessage = $"Ошибка загрузки выбранного направления: {exception.Message}";
+            StatusMessage = $"Ошибка загрузки выбранного направления: {exception.Message}";
         }
     }
 }

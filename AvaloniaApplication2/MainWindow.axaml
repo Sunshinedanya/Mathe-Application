@@ -172,7 +172,7 @@
                   <TextBlock FontSize="21"
                              FontWeight="SemiBold"
                              Foreground="#FF202020"
-                             Text="{Binding currentSectionTitle}" />
+                             Text="{Binding CurrentSectionTitle}" />
                   <TextBlock FontSize="12"
                              Foreground="#FF666666"
                              Text="Список, сортировка, редактирование, добавление и постраничный вывод." />
@@ -185,12 +185,12 @@
                         BorderThickness="1">
                   <TextBlock FontSize="12"
                              Foreground="#FF555555"
-                             Text="{Binding statusMessage}" />
+                             Text="{Binding StatusMessage}" />
                 </Border>
               </Grid>
 
               <ContentControl Grid.Row="2"
-                              Content="{Binding currentSectionViewModel}" />
+                              Content="{Binding CurrentSectionViewModel}" />
             </Grid>
           </Border>
         </Grid>
@@ -249,7 +249,7 @@
                          FontWeight="SemiBold"
                          HorizontalAlignment="Right"
                          Foreground="#FF202020"
-                         Text="{Binding currentSectionTitle}" />
+                         Text="{Binding CurrentSectionTitle}" />
             </StackPanel>
           </Border>
         </Grid>
@@ -270,7 +270,7 @@
                      VerticalAlignment="Center"
                      FontSize="12"
                      Foreground="#FF666666"
-                     Text="{Binding statusMessage}" />
+                     Text="{Binding StatusMessage}" />
         </Grid>
       </Border>
     </Grid>
