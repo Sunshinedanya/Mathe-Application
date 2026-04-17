@@ -1,0 +1,326 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="AvaloniaApplication2.Views.ServicesView"
+             x:CompileBindings="False">
+  <Grid RowDefinitions="Auto,*,Auto"
+        RowSpacing="14">
+    <Border Grid.Row="0"
+            Padding="14"
+            CornerRadius="12"
+            Background="#FFF6F6F6"
+            BorderBrush="#FFD9D9D9"
+            BorderThickness="1">
+      <Grid ColumnDefinitions="2.2*,Auto,Auto,Auto"
+            ColumnSpacing="10">
+        <TextBox Grid.Column="0"
+                 Height="38"
+                 VerticalContentAlignment="Center"
+                 Watermark="Поиск услуги, коллекции или направления"
+                 Text="{Binding searchText}" />
+
+        <Button Grid.Column="1"
+                MinWidth="110"
+                Height="38"
+                Command="{Binding SearchCommand}"
+                Content="Поиск" />
+
+        <Button Grid.Column="2"
+                MinWidth="150"
+                Height="38"
+                Command="{Binding ToggleSortCommand}"
+                Content="Сортировка А-Я" />
+
+        <Button Grid.Column="3"
+                MinWidth="120"
+                Height="38"
+                Background="#FF202020"
+                Foreground="White"
+                BorderBrush="#FF202020"
+                Command="{Binding CreateNewCommand}"
+                Content="Добавить" />
+      </Grid>
+    </Border>
+
+    <Grid Grid.Row="1"
+          ColumnDefinitions="2.25*,1.15*"
+          ColumnSpacing="16">
+      <Border Grid.Column="0"
+              Padding="14"
+              CornerRadius="12"
+              Background="White"
+              BorderBrush="#FFD9D9D9"
+              BorderThickness="1">
+        <Grid RowDefinitions="Auto,*,Auto"
+              RowSpacing="12">
+          <Grid Grid.Row="0"
+                ColumnDefinitions="*,Auto"
+                ColumnSpacing="10">
+            <StackPanel Spacing="3">
+              <TextBlock FontSize="20"
+                         FontWeight="SemiBold"
+                         Foreground="#FF202020"
+                         Text="Список услуг" />
+              <TextBlock FontSize="12"
+                         Foreground="#FF6D6D6D"
+                         Text="Постраничный вывод, сортировка по алфавиту и быстрый переход к редактированию." />
+            </StackPanel>
+
+            <Button Grid.Column="1"
+                    MinWidth="120"
+                    Height="36"
+                    VerticalAlignment="Center"
+                    Command="{Binding ReloadCommand}"
+                    Content="Обновить" />
+          </Grid>
+
+          <ListBox Grid.Row="1"
+                   ItemsSource="{Binding items}"
+                   SelectedItem="{Binding selectedItem}"
+                   Background="Transparent"
+                   BorderThickness="0">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Border Margin="0,0,0,12"
+                        Padding="14"
+                        CornerRadius="12"
+                        Background="#FFFBFBFB"
+                        BorderBrush="#FFE2E2E2"
+                        BorderThickness="1">
+                  <Grid ColumnDefinitions="120,*,Auto"
+                        ColumnSpacing="14">
+                    <Border Grid.Column="0"
+                            Height="120"
+                            CornerRadius="10"
+                            Background="#FFF0F0F0"
+                            BorderBrush="#FFD5D5D5"
+                            BorderThickness="1">
+                      <StackPanel HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Spacing="6">
+                        <TextBlock HorizontalAlignment="Center"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="#FF555555"
+                                   Text="Фото" />
+                        <TextBlock HorizontalAlignment="Center"
+                                   FontSize="11"
+                                   Foreground="#FF888888"
+                                   Text="{Binding imagePath, FallbackValue='Нет изображения'}" />
+                      </StackPanel>
+                    </Border>
+
+                    <Grid Grid.Column="1"
+                          RowDefinitions="Auto,Auto,*,Auto"
+                          RowSpacing="6">
+                      <Grid ColumnDefinitions="*,Auto"
+                            ColumnSpacing="8">
+                        <TextBlock Grid.Column="0"
+                                   FontSize="17"
+                                   FontWeight="SemiBold"
+                                   Foreground="#FF202020"
+                                   Text="{Binding name}" />
+
+                        <Border Grid.Column="1"
+                                Padding="10,4"
+                                CornerRadius="12"
+                                Background="#FF202020">
+                          <TextBlock FontSize="11"
+                                     Foreground="White"
+                                     Text="{Binding collectionName}" />
+                        </Border>
+                      </Grid>
+
+                      <TextBlock Grid.Row="1"
+                                 FontSize="12"
+                                 Foreground="#FF666666"
+                                 Text="{Binding directionName, StringFormat='Направление: {0}'}" />
+
+                      <TextBlock Grid.Row="2"
+                                 TextWrapping="Wrap"
+                                 MaxLines="3"
+                                 Foreground="#FF404040"
+                                 Text="{Binding description}" />
+
+                      <Grid Grid.Row="3"
+                            ColumnDefinitions="Auto,Auto,Auto,*"
+                            ColumnSpacing="14">
+                        <TextBlock Grid.Column="0"
+                                   Foreground="#FF5E5E5E"
+                                   Text="{Binding durationMinutes, StringFormat='Длительность: {0} мин.'}" />
+
+                        <TextBlock Grid.Column="1"
+                                   Foreground="#FF5E5E5E"
+                                   Text="{Binding basePrice, StringFormat='Цена: {0:F2} ₽'}" />
+
+                        <TextBlock Grid.Column="2"
+                                   Foreground="#FF5E5E5E"
+                                   Text="{Binding isActive, StringFormat='Активна: {0}'}" />
+
+                        <TextBlock Grid.Column="3"
+                                   HorizontalAlignment="Right"
+                                   Foreground="#FF7A7A7A"
+                                   Text="{Binding lastModifiedAt, StringFormat='Изменено: {0:dd.MM.yyyy HH:mm}'}" />
+                      </Grid>
+                    </Grid>
+
+                    <StackPanel Grid.Column="2"
+                                VerticalAlignment="Center"
+                                Spacing="8">
+                      <Border Padding="10,6"
+                              CornerRadius="10"
+                              Background="#FFF3F3F3"
+                              BorderBrush="#FFD8D8D8"
+                              BorderThickness="1">
+                        <TextBlock FontSize="12"
+                                   Foreground="#FF444444"
+                                   Text="Выбор" />
+                      </Border>
+                    </StackPanel>
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+
+          <Border Grid.Row="2"
+                  Padding="12"
+                  CornerRadius="10"
+                  Background="#FFF7F7F7"
+                  BorderBrush="#FFE2E2E2"
+                  BorderThickness="1">
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto"
+                  ColumnSpacing="10">
+              <Button Grid.Column="0"
+                      MinWidth="96"
+                      Height="34"
+                      Command="{Binding PreviousPageCommand}"
+                      Content="← Назад" />
+
+              <Button Grid.Column="1"
+                      MinWidth="96"
+                      Height="34"
+                      Command="{Binding NextPageCommand}"
+                      Content="Вперёд →" />
+
+              <TextBlock Grid.Column="3"
+                         VerticalAlignment="Center"
+                         FontWeight="SemiBold"
+                         Foreground="#FF222222"
+                         Text="{Binding pageInfo, StringFormat='Страница: {0}'}" />
+
+              <TextBlock Grid.Column="4"
+                         VerticalAlignment="Center"
+                         Foreground="#FF666666"
+                         Text="{Binding totalCount, StringFormat='Всего: {0}'}" />
+
+              <TextBlock Grid.Column="5"
+                         VerticalAlignment="Center"
+                         Foreground="#FF666666"
+                         Text="{Binding statusMessage}" />
+            </Grid>
+          </Border>
+        </Grid>
+      </Border>
+
+      <Border Grid.Column="1"
+              Padding="14"
+              CornerRadius="12"
+              Background="White"
+              BorderBrush="#FFD9D9D9"
+              BorderThickness="1">
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="10">
+            <TextBlock FontSize="20"
+                       FontWeight="SemiBold"
+                       Foreground="#FF202020"
+                       Text="Редактор услуги" />
+
+            <TextBlock Foreground="#FF666666"
+                       Text="{Binding editorLastModifiedAt, StringFormat='Последнее изменение: {0:dd.MM.yyyy HH:mm}'}" />
+
+            <TextBlock Text="Коллекция" />
+            <ComboBox ItemsSource="{Binding collectionOptions}"
+                      SelectedValue="{Binding editorCollectionId}"
+                      SelectedValueBinding="{Binding id}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding name}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBlock Text="Название услуги" />
+            <TextBox Text="{Binding editorName}" />
+
+            <TextBlock Text="Описание" />
+            <TextBox MinHeight="120"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     Text="{Binding editorDescription}" />
+
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="10">
+              <StackPanel Spacing="6">
+                <TextBlock Text="Длительность, мин." />
+                <TextBox Text="{Binding editorDurationMinutes}" />
+              </StackPanel>
+
+              <StackPanel Grid.Column="1"
+                          Spacing="6">
+                <TextBlock Text="Стоимость" />
+                <TextBox Text="{Binding editorBasePrice}" />
+              </StackPanel>
+            </Grid>
+
+            <TextBlock Text="Путь к изображению" />
+            <TextBox Text="{Binding editorImagePath}" />
+
+            <CheckBox IsChecked="{Binding editorIsActive}"
+                      Content="Активная услуга" />
+
+            <Border Padding="10"
+                    CornerRadius="10"
+                    Background="#FFF8F8F8"
+                    BorderBrush="#FFE1E1E1"
+                    BorderThickness="1">
+              <StackPanel Spacing="5">
+                <TextBlock Foreground="#FF555555"
+                           Text="{Binding editorId, StringFormat='ID: {0}'}" />
+                <TextBlock Foreground="#FF555555"
+                           Text="{Binding statusMessage}" />
+              </StackPanel>
+            </Border>
+
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="10"
+                  Margin="0,8,0,0">
+              <Button Grid.Column="0"
+                      Height="38"
+                      Background="#FF202020"
+                      Foreground="White"
+                      BorderBrush="#FF202020"
+                      Command="{Binding SaveCommand}"
+                      Content="Сохранить" />
+
+              <Button Grid.Column="1"
+                      Height="38"
+                      Command="{Binding DeleteCommand}"
+                      Content="Удалить" />
+            </Grid>
+          </StackPanel>
+        </ScrollViewer>
+      </Border>
+    </Grid>
+
+    <Border Grid.Row="2"
+            Padding="12"
+            CornerRadius="12"
+            Background="#FFF6F6F6"
+            BorderBrush="#FFD9D9D9"
+            BorderThickness="1">
+      <TextBlock Foreground="#FF5A5A5A"
+                 Text="Раздел услуг оформлен в виде карточек: поиск, сортировка, постраничная навигация и редактирование выбранной записи." />
+    </Border>
+  </Grid>
+</UserControl>

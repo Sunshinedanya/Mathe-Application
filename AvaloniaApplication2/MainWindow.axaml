@@ -2,8 +2,277 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d"
         x:Class="AvaloniaApplication2.MainWindow"
-        Title="AvaloniaApplication2">
-    Welcome to Avalonia!
+        x:CompileBindings="False"
+        Width="1280"
+        Height="820"
+        MinWidth="1280"
+        MinHeight="820"
+        MaxWidth="1280"
+        MaxHeight="820"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen"
+        SystemDecorations="None"
+        Background="#FFF2F2F2"
+        Title="Матье">
+  <Border Background="#FFF2F2F2"
+          BorderBrush="#FF151515"
+          BorderThickness="1">
+    <Grid RowDefinitions="56,*,42">
+      <Border Grid.Row="0"
+              Background="#FFF7F7F7"
+              BorderBrush="#FF151515"
+              BorderThickness="0,0,0,1"
+              PointerPressed="TitleBar_OnPointerPressed">
+        <Grid ColumnDefinitions="Auto,*,Auto,Auto"
+              Margin="10,8,10,8">
+          <TextBlock Grid.Column="0"
+                     VerticalAlignment="Center"
+                     FontSize="18"
+                     FontWeight="SemiBold"
+                     Foreground="#FF202020"
+                     Text="Матье" />
+
+          <Button Grid.Column="2"
+                  Width="92"
+                  Height="28"
+                  Margin="0,0,8,0"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Center"
+                  Background="#FFF5F5F5"
+                  Foreground="#FF202020"
+                  BorderBrush="#FF9D9D9D"
+                  BorderThickness="1"
+                  Click="MinimizeButton_OnClick"
+                  Content="Свернуть" />
+
+          <Button Grid.Column="3"
+                  Width="80"
+                  Height="28"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Center"
+                  Background="#FFF5F5F5"
+                  Foreground="#FF202020"
+                  BorderBrush="#FF9D9D9D"
+                  BorderThickness="1"
+                  Click="CloseButton_OnClick"
+                  Content="Закрыть" />
+        </Grid>
+      </Border>
+
+      <Grid Grid.Row="1"
+            Margin="16,14,16,10"
+            ColumnDefinitions="180,16,*,160">
+        <Grid Grid.Column="0"
+              RowDefinitions="120,*,Auto,12,Auto">
+          <Border Grid.Row="0"
+                  Width="132"
+                  Height="86"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Background="#FFEFEFEF"
+                  BorderBrush="#FF8C8C8C"
+                  BorderThickness="1">
+            <Grid RowDefinitions="Auto,*">
+              <Border Background="#FFF7F7F7"
+                      BorderBrush="#FFD4D4D4"
+                      BorderThickness="0,0,0,1" />
+              <TextBlock Grid.Row="1"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         FontSize="13"
+                         FontWeight="SemiBold"
+                         Foreground="#FF303030"
+                         Text="Лого" />
+            </Grid>
+          </Border>
+
+          <StackPanel Grid.Row="2"
+                      Spacing="10"
+                      VerticalAlignment="Bottom">
+            <Button Height="38"
+                    Background="#FFF7F7F7"
+                    Foreground="#FF202020"
+                    BorderBrush="#FF9E9E9E"
+                    BorderThickness="1"
+                    Command="{Binding ShowServicesCommand}"
+                    Content="Услуги" />
+
+            <Button Height="38"
+                    Background="#FFF7F7F7"
+                    Foreground="#FF202020"
+                    BorderBrush="#FF9E9E9E"
+                    BorderThickness="1"
+                    Command="{Binding ShowCollectionsCommand}"
+                    Content="Коллекции" />
+
+            <Button Height="38"
+                    Background="#FFF7F7F7"
+                    Foreground="#FF202020"
+                    BorderBrush="#FF9E9E9E"
+                    BorderThickness="1"
+                    Command="{Binding ShowDirectionsCommand}"
+                    Content="Направления" />
+          </StackPanel>
+
+          <Button Grid.Row="4"
+                  Height="36"
+                  Background="#FFF7F7F7"
+                  Foreground="#FF202020"
+                  BorderBrush="#FF9E9E9E"
+                  BorderThickness="1"
+                  Click="CloseButton_OnClick"
+                  Content="Выход" />
+        </Grid>
+
+        <Grid Grid.Column="2"
+              RowDefinitions="Auto,10,*">
+          <Grid Grid.Row="0"
+                ColumnDefinitions="180,8,180,*,180"
+                Margin="0,0,0,0">
+            <Button Grid.Column="0"
+                    Height="40"
+                    Background="#FFF7F7F7"
+                    Foreground="#FF202020"
+                    BorderBrush="#FF9E9E9E"
+                    BorderThickness="1"
+                    Command="{Binding ShowServicesCommand}"
+                    Content="Услуги" />
+
+            <Button Grid.Column="2"
+                    Height="40"
+                    Background="#FFF7F7F7"
+                    Foreground="#FF202020"
+                    BorderBrush="#FF9E9E9E"
+                    BorderThickness="1"
+                    Command="{Binding ShowCollectionsCommand}"
+                    Content="Коллекции" />
+
+            <Button Grid.Column="4"
+                    Height="40"
+                    Background="#FFF7F7F7"
+                    Foreground="#FF202020"
+                    BorderBrush="#FF9E9E9E"
+                    BorderThickness="1"
+                    Command="{Binding ShowDirectionsCommand}"
+                    Content="Направления" />
+          </Grid>
+
+          <Border Grid.Row="2"
+                  Background="#FFFDFDFD"
+                  BorderBrush="#FF8C8C8C"
+                  BorderThickness="1"
+                  Padding="12">
+            <Grid RowDefinitions="Auto,10,*">
+              <Grid Grid.Row="0"
+                    ColumnDefinitions="*,Auto"
+                    VerticalAlignment="Center">
+                <StackPanel Spacing="2">
+                  <TextBlock FontSize="21"
+                             FontWeight="SemiBold"
+                             Foreground="#FF202020"
+                             Text="{Binding currentSectionTitle}" />
+                  <TextBlock FontSize="12"
+                             Foreground="#FF666666"
+                             Text="Список, сортировка, редактирование, добавление и постраничный вывод." />
+                </StackPanel>
+
+                <Border Grid.Column="1"
+                        Padding="10,6"
+                        Background="#FFF7F7F7"
+                        BorderBrush="#FFD0D0D0"
+                        BorderThickness="1">
+                  <TextBlock FontSize="12"
+                             Foreground="#FF555555"
+                             Text="{Binding statusMessage}" />
+                </Border>
+              </Grid>
+
+              <ContentControl Grid.Row="2"
+                              Content="{Binding currentSectionViewModel}" />
+            </Grid>
+          </Border>
+        </Grid>
+
+        <Grid Grid.Column="3"
+              RowDefinitions="Auto,8,Auto,16,Auto,20,*,Auto">
+          <TextBox Grid.Row="0"
+                   Height="28"
+                   Watermark="Поиск" />
+
+          <TextBox Grid.Row="2"
+                   Height="28"
+                   Watermark="Коллекция" />
+
+          <Grid Grid.Row="4"
+                ColumnDefinitions="1*,12,1*"
+                HorizontalAlignment="Center"
+                Margin="0,6,0,0">
+            <Button Grid.Column="0"
+                    Width="52"
+                    Height="52"
+                    FontSize="28"
+                    FontWeight="Bold"
+                    Background="Transparent"
+                    Foreground="#FF111111"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding RefreshCurrentSectionCommand}"
+                    Content="←" />
+
+            <Button Grid.Column="2"
+                    Width="52"
+                    Height="52"
+                    FontSize="28"
+                    FontWeight="Bold"
+                    Background="Transparent"
+                    Foreground="#FF111111"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding RefreshCurrentSectionCommand}"
+                    Content="→" />
+          </Grid>
+
+          <Border Grid.Row="7"
+                  Padding="10,8"
+                  Background="#FFF7F7F7"
+                  BorderBrush="#FF9E9E9E"
+                  BorderThickness="1"
+                  HorizontalAlignment="Right">
+            <StackPanel Spacing="4">
+              <TextBlock FontSize="12"
+                         HorizontalAlignment="Right"
+                         Foreground="#FF555555"
+                         Text="Текущий раздел" />
+              <TextBlock FontSize="13"
+                         FontWeight="SemiBold"
+                         HorizontalAlignment="Right"
+                         Foreground="#FF202020"
+                         Text="{Binding currentSectionTitle}" />
+            </StackPanel>
+          </Border>
+        </Grid>
+      </Grid>
+
+      <Border Grid.Row="2"
+              Background="#FFF7F7F7"
+              BorderBrush="#FFD3D3D3"
+              BorderThickness="0,1,0,0"
+              Padding="14,0">
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBlock VerticalAlignment="Center"
+                     FontSize="12"
+                     Foreground="#FF666666"
+                     Text="Lavka «Матье» • Avalonia • PostgreSQL • Entity Framework" />
+
+          <TextBlock Grid.Column="1"
+                     VerticalAlignment="Center"
+                     FontSize="12"
+                     Foreground="#FF666666"
+                     Text="{Binding statusMessage}" />
+        </Grid>
+      </Border>
+    </Grid>
+  </Border>
 </Window>
