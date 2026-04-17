@@ -51,8 +51,7 @@ public sealed class AppDbContext : DbContext
         }
 
         var connectionString =
-            Environment.GetEnvironmentVariable("MATHIE_CONNECTION_STRING") ??
-            "Host=localhost;Port=5432;Database=matheDb;Username=postgres;Password=changeMe";
+            "Host=localhost;Port=5432;Database=matheDb;Username=postgres;Password=44122144";
 
         optionsBuilder.UseNpgsql(connectionString);
     }
