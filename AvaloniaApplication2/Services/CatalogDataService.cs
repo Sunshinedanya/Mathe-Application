@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AvaloniaApplication2.Services;
 
-public sealed class CatalogDataService
+public sealed class CatalogDataService : ICatalogDataService
 {
     public async Task InitializeDatabaseAsync()
     {

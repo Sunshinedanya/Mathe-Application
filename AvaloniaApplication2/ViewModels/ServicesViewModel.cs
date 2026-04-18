@@ -10,7 +10,7 @@ namespace AvaloniaApplication2.ViewModels;
 
 public partial class ServicesViewModel : ViewModelBase
 {
-    private readonly CatalogDataService catalogDataService;
+    private readonly ICatalogDataService catalogDataService;
     private readonly int pageSize;
 
     [ObservableProperty]
@@ -75,7 +75,7 @@ public partial class ServicesViewModel : ViewModelBase
     {
     }
 
-    public ServicesViewModel(CatalogDataService catalogDataService, int pageSize, string defaultSort = "alphabetAsc")
+    public ServicesViewModel(ICatalogDataService catalogDataService, int pageSize, string defaultSort = "alphabetAsc")
     {
         this.catalogDataService = catalogDataService;
         this.pageSize = pageSize <= 0 ? 3 : pageSize;

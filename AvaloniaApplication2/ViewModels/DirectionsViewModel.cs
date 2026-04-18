@@ -10,7 +10,7 @@ namespace AvaloniaApplication2.ViewModels;
 
 public partial class DirectionsViewModel : ViewModelBase
 {
-    private readonly CatalogDataService catalogDataService;
+    private readonly ICatalogDataService catalogDataService;
     private readonly int pageSize;
 
     [ObservableProperty]
@@ -57,7 +57,7 @@ public partial class DirectionsViewModel : ViewModelBase
     {
     }
 
-    public DirectionsViewModel(CatalogDataService catalogDataService, int pageSize, string defaultSort = "alphabetAsc")
+    public DirectionsViewModel(ICatalogDataService catalogDataService, int pageSize, string defaultSort = "alphabetAsc")
     {
         this.catalogDataService = catalogDataService;
         this.pageSize = pageSize <= 0 ? 3 : pageSize;
