@@ -1,0 +1,321 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="AvaloniaApplication2.Views.CollectionsView"
+             x:CompileBindings="False">
+  <Grid RowDefinitions="Auto,*,Auto"
+        RowSpacing="14"
+        Margin="0">
+
+    <Border Grid.Row="0"
+            Padding="14"
+            CornerRadius="12"
+            Background="#FFF6F6F6"
+            BorderBrush="#FFDADADA"
+            BorderThickness="1">
+      <Grid ColumnDefinitions="2.2*,Auto,Auto,Auto"
+            ColumnSpacing="10">
+        <TextBox Grid.Column="0"
+                 Height="38"
+                 VerticalContentAlignment="Center"
+                 Watermark="Поиск коллекции"
+                 Text="{Binding SearchText}" />
+
+        <Button Grid.Column="1"
+                Height="38"
+                MinWidth="110"
+                Command="{Binding SearchCommand}"
+                Content="Поиск" />
+
+        <Button Grid.Column="2"
+                Height="38"
+                MinWidth="150"
+                Command="{Binding ToggleSortCommand}"
+                Content="Сортировка А-Я" />
+
+        <Button Grid.Column="3"
+                Height="38"
+                MinWidth="150"
+                Command="{Binding CreateNewCommand}"
+                Content="Добавить новую" />
+      </Grid>
+    </Border>
+
+    <Grid Grid.Row="1"
+          ColumnDefinitions="2.2*,1.15*"
+          ColumnSpacing="16">
+
+      <Border Grid.Column="0"
+              Padding="14"
+              CornerRadius="12"
+              Background="White"
+              BorderBrush="#FFDADADA"
+              BorderThickness="1">
+        <Grid RowDefinitions="Auto,*,Auto"
+              RowSpacing="12">
+          <Grid Grid.Row="0"
+                ColumnDefinitions="*,Auto"
+                ColumnSpacing="10">
+            <StackPanel Spacing="2">
+              <TextBlock FontSize="20"
+                         FontWeight="SemiBold"
+                         Foreground="#FF222222"
+                         Text="Список коллекций" />
+              <TextBlock FontSize="12"
+                         Foreground="#FF6A6A6A"
+                         Text="Постраничный вывод, сортировка по алфавиту и редактирование выбранной записи." />
+            </StackPanel>
+
+            <Border Grid.Column="1"
+                    Padding="12,6"
+                    CornerRadius="10"
+                    Background="#FFF7F7F7"
+                    BorderBrush="#FFE2E2E2"
+                    BorderThickness="1"
+                    VerticalAlignment="Center">
+              <TextBlock FontSize="12"
+                         Foreground="#FF555555"
+                         Text="{Binding TotalCount, StringFormat='Всего: {0}'}" />
+            </Border>
+          </Grid>
+
+          <ScrollViewer Grid.Row="1"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Disabled">
+            <ListBox ItemsSource="{Binding Items}"
+                     SelectedItem="{Binding SelectedItem}"
+                     Background="Transparent"
+                     BorderThickness="0">
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <Border Margin="0,0,0,12"
+                          Padding="14"
+                          CornerRadius="12"
+                          Background="#FFFBFBFB"
+                          BorderBrush="#FFE3E3E3"
+                          BorderThickness="1">
+                    <Grid ColumnDefinitions="120,*"
+                          ColumnSpacing="14">
+                      <Border Grid.Column="0"
+                              Height="104"
+                              CornerRadius="10"
+                              Background="#FFF1F1F1"
+                              BorderBrush="#FFD7D7D7"
+                              BorderThickness="1">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="14"
+                                   Foreground="#FF6A6A6A"
+                                   Text="Фото" />
+                      </Border>
+
+                      <Grid Grid.Column="1"
+                            RowDefinitions="Auto,Auto,*,Auto"
+                            RowSpacing="6">
+                        <Grid ColumnDefinitions="*,Auto"
+                              ColumnSpacing="8">
+                          <TextBlock Grid.Column="0"
+                                     FontSize="17"
+                                     FontWeight="SemiBold"
+                                     Foreground="#FF222222"
+                                     Text="{Binding name}" />
+
+                          <Border Grid.Column="1"
+                                  Padding="10,4"
+                                  CornerRadius="10"
+                                  Background="#FF202020">
+                            <TextBlock FontSize="11"
+                                       Foreground="White"
+                                       Text="{Binding directionName}" />
+                          </Border>
+                        </Grid>
+
+                        <TextBlock Grid.Row="1"
+                                   FontSize="12"
+                                   Foreground="#FF6A6A6A"
+                                   Text="{Binding id, StringFormat='ID коллекции: {0}'}" />
+
+                        <TextBlock Grid.Row="2"
+                                   MaxLines="3"
+                                   TextWrapping="Wrap"
+                                   Foreground="#FF444444"
+                                   Text="{Binding description}" />
+
+                        <Grid Grid.Row="3"
+                              ColumnDefinitions="*,Auto"
+                              ColumnSpacing="10">
+                          <TextBlock Grid.Column="0"
+                                     VerticalAlignment="Center"
+                                     Foreground="#FF777777"
+                                     Text="Выберите карточку для редактирования" />
+
+                          <TextBlock Grid.Column="1"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Right"
+                                     Foreground="#FF777777"
+                                     Text="{Binding lastModifiedAt, StringFormat='Изменено: {0:dd.MM.yyyy HH:mm}'}" />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </ScrollViewer>
+
+          <Border Grid.Row="2"
+                  Padding="10"
+                  CornerRadius="10"
+                  Background="#FFF7F7F7"
+                  BorderBrush="#FFE2E2E2"
+                  BorderThickness="1">
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto"
+                  ColumnSpacing="8">
+              <Button Grid.Column="0"
+                      Height="34"
+                      MinWidth="90"
+                      Command="{Binding PreviousPageCommand}"
+                      Content="Назад" />
+
+              <Button Grid.Column="1"
+                      Height="34"
+                      MinWidth="90"
+                      Command="{Binding NextPageCommand}"
+                      Content="Вперёд" />
+
+              <TextBlock Grid.Column="3"
+                         VerticalAlignment="Center"
+                         FontWeight="SemiBold"
+                         Foreground="#FF333333"
+                         Text="{Binding CurrentPage, StringFormat='Страница: {0}'}" />
+
+              <TextBlock Grid.Column="4"
+                         VerticalAlignment="Center"
+                         Foreground="#FF666666"
+                         Text="/" />
+
+              <TextBlock Grid.Column="5"
+                         VerticalAlignment="Center"
+                         Foreground="#FF333333"
+                         Text="{Binding TotalPages}" />
+            </Grid>
+          </Border>
+        </Grid>
+      </Border>
+
+      <Border Grid.Column="1"
+              Padding="16"
+              CornerRadius="12"
+              Background="White"
+              BorderBrush="#FFDADADA"
+              BorderThickness="1">
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="10">
+            <TextBlock FontSize="20"
+                       FontWeight="SemiBold"
+                       Foreground="#FF222222"
+                       Text="Редактор коллекции" />
+
+            <TextBlock FontSize="12"
+                       Foreground="#FF6A6A6A"
+                       Text="Добавление и редактирование данных выбранной записи." />
+
+            <Border Padding="10"
+                    CornerRadius="10"
+                    Background="#FFF8F8F8"
+                    BorderBrush="#FFE2E2E2"
+                    BorderThickness="1">
+              <StackPanel Spacing="4">
+                <TextBlock Foreground="#FF555555"
+                           Text="{Binding EditId, StringFormat='ID: {0}'}" />
+                <TextBlock Foreground="#FF555555"
+                           Text="{Binding EditLastModifiedAt, StringFormat='Последнее изменение: {0:dd.MM.yyyy HH:mm}'}" />
+              </StackPanel>
+            </Border>
+
+            <TextBlock FontWeight="SemiBold"
+                       Text="Название коллекции" />
+            <TextBox Text="{Binding EditName}"
+                     Watermark="Введите название" />
+
+            <TextBlock FontWeight="SemiBold"
+                       Text="Направление" />
+            <ComboBox ItemsSource="{Binding DirectionLookupItems}"
+                      SelectedValue="{Binding EditDirectionId}"
+                      SelectedValueBinding="{Binding id}">
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding name}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBlock FontWeight="SemiBold"
+                       Text="Описание" />
+            <TextBox MinHeight="150"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     VerticalContentAlignment="Top"
+                     Text="{Binding EditDescription}"
+                     Watermark="Введите описание коллекции" />
+
+            <Border Padding="12"
+                    CornerRadius="10"
+                    Background="#FFF6F6F6"
+                    BorderBrush="#FFE2E2E2"
+                    BorderThickness="1">
+              <TextBlock Foreground="#FF555555"
+                         TextWrapping="Wrap"
+                         Text="{Binding StatusMessage}" />
+            </Border>
+
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="10"
+                  Margin="0,8,0,0">
+              <Button Grid.Column="0"
+                      Height="38"
+                      Background="#FF202020"
+                      Foreground="White"
+                      BorderBrush="#FF202020"
+                      Command="{Binding SaveCommand}"
+                      Content="Сохранить" />
+
+              <Button Grid.Column="1"
+                      Height="38"
+                      Command="{Binding CreateNewCommand}"
+                      Content="Очистить" />
+            </Grid>
+
+            <Button Height="38"
+                    Background="#FFFDECEC"
+                    Foreground="#FF9A1F1F"
+                    BorderBrush="#FFD8B1B1"
+                    Command="{Binding DeleteCommand}"
+                    Content="Удалить запись" />
+          </StackPanel>
+        </ScrollViewer>
+      </Border>
+    </Grid>
+
+    <Border Grid.Row="2"
+            Padding="12"
+            CornerRadius="12"
+            Background="#FFF6F6F6"
+            BorderBrush="#FFDADADA"
+            BorderThickness="1">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Foreground="#FF4A4A4A"
+                   TextWrapping="Wrap"
+                   Text="{Binding StatusMessage}" />
+
+        <TextBlock Grid.Column="1"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Foreground="#FF4A4A4A"
+                   Text="{Binding TotalCount, StringFormat='Записей: {0}'}" />
+      </Grid>
+    </Border>
+  </Grid>
+</UserControl>

@@ -1,0 +1,148 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="AvaloniaApplication2.Views.LoginWindow"
+        x:CompileBindings="False"
+        Width="440"
+        Height="540"
+        MinWidth="440"
+        MinHeight="540"
+        MaxWidth="440"
+        MaxHeight="540"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen"
+        SystemDecorations="None"
+        Background="#FFF2F2F2"
+        Title="Матье — Вход">
+
+  <Border Background="#FFF2F2F2"
+          BorderBrush="#FF151515"
+          BorderThickness="1">
+    <Grid RowDefinitions="48,*,42">
+
+      <!-- Title bar -->
+      <Border Grid.Row="0"
+              Background="#FFF7F7F7"
+              BorderBrush="#FF151515"
+              BorderThickness="0,0,0,1"
+              PointerPressed="TitleBar_OnPointerPressed">
+        <Grid ColumnDefinitions="*,Auto"
+              Margin="14,0,10,0">
+          <TextBlock VerticalAlignment="Center"
+                     FontSize="14"
+                     FontWeight="SemiBold"
+                     Foreground="#FF202020"
+                     Text="Матье — Авторизация" />
+          <Button Grid.Column="1"
+                  Width="78"
+                  Height="26"
+                  VerticalAlignment="Center"
+                  Background="#FFF5F5F5"
+                  Foreground="#FF202020"
+                  BorderBrush="#FF9D9D9D"
+                  BorderThickness="1"
+                  Click="CloseButton_OnClick"
+                  Content="Закрыть" />
+        </Grid>
+      </Border>
+
+      <!-- Main content -->
+      <ScrollViewer Grid.Row="1"
+                    VerticalScrollBarVisibility="Disabled"
+                    HorizontalScrollBarVisibility="Disabled">
+        <StackPanel VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Spacing="14"
+                    Width="320"
+                    Margin="0,32,0,32">
+
+          <!-- Logo -->
+          <Image Source="avares://AvaloniaApplication2/Resources/Logo.png"
+                 Width="88"
+                 Height="88"
+                 HorizontalAlignment="Center"
+                 Stretch="Uniform" />
+
+          <!-- App name -->
+          <TextBlock HorizontalAlignment="Center"
+                     FontSize="26"
+                     FontWeight="Bold"
+                     Foreground="#FF202020"
+                     Text="Матье" />
+
+          <TextBlock HorizontalAlignment="Center"
+                     FontSize="13"
+                     Foreground="#FF777777"
+                     Text="Войдите в систему управления" />
+
+          <!-- Divider -->
+          <Border Height="1"
+                  Margin="0,4,0,4"
+                  Background="#FFE0E0E0" />
+
+          <!-- Email -->
+          <StackPanel Spacing="6">
+            <TextBlock FontWeight="SemiBold"
+                       FontSize="13"
+                       Foreground="#FF303030"
+                       Text="Email" />
+            <TextBox Text="{Binding Email}"
+                     Watermark="admin@mathieu.ru"
+                     Height="38"
+                     VerticalContentAlignment="Center" />
+          </StackPanel>
+
+          <!-- Password -->
+          <StackPanel Spacing="6">
+            <TextBlock FontWeight="SemiBold"
+                       FontSize="13"
+                       Foreground="#FF303030"
+                       Text="Пароль" />
+            <TextBox Text="{Binding Password}"
+                     PasswordChar="●"
+                     Watermark="Введите пароль"
+                     Height="38"
+                     VerticalContentAlignment="Center" />
+          </StackPanel>
+
+          <!-- Error message -->
+          <Border IsVisible="{Binding hasError}"
+                  Padding="12,10"
+                  CornerRadius="8"
+                  Background="#FFFDECEC"
+                  BorderBrush="#FFD8B1B1"
+                  BorderThickness="1">
+            <TextBlock Foreground="#FF9A1F1F"
+                       FontSize="13"
+                       TextWrapping="Wrap"
+                       Text="{Binding ErrorMessage}" />
+          </Border>
+
+          <!-- Login button -->
+          <Button Height="42"
+                  HorizontalAlignment="Stretch"
+                  HorizontalContentAlignment="Center"
+                  VerticalContentAlignment="Center"
+                  FontSize="14"
+                  FontWeight="SemiBold"
+                  Background="#FF202020"
+                  Foreground="White"
+                  BorderBrush="#FF202020"
+                  BorderThickness="1"
+                  CornerRadius="8"
+                  IsEnabled="{Binding !IsBusy}"
+                  Command="{Binding LoginCommand}"
+                  Content="Войти"
+                  Margin="0,4,0,0" />
+
+          <!-- Busy hint -->
+          <TextBlock IsVisible="{Binding IsBusy}"
+                     HorizontalAlignment="Center"
+                     FontSize="12"
+                     Foreground="#FF888888"
+                     Text="Подключение к базе данных..." />
+
+        </StackPanel>
+      </ScrollViewer>
+    </Grid>
+  </Border>
+</Window>

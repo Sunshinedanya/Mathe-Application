@@ -1,10 +1,182 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="using:AvaloniaApplication2.ViewModels"
+             xmlns:views="using:AvaloniaApplication2.Views"
              x:Class="AvaloniaApplication2.App"
              RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+  <Application.Styles>
+    <FluentTheme />
 
-    <Application.Styles>
-        <FluentTheme />
-    </Application.Styles>
+    <Style Selector="Window">
+      <Setter Property="Background" Value="#FFF4F4F4" />
+      <Setter Property="FontFamily" Value="Inter, Segoe UI, Arial" />
+    </Style>
+
+    <Style Selector="TextBlock.sectionTitle">
+      <Setter Property="FontSize" Value="24" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="Foreground" Value="#FF202020" />
+    </Style>
+
+    <Style Selector="TextBlock.sectionSubtitle">
+      <Setter Property="FontSize" Value="13" />
+      <Setter Property="Foreground" Value="#FF6D6D6D" />
+    </Style>
+
+    <Style Selector="Border.surfacePanel">
+      <Setter Property="Background" Value="White" />
+      <Setter Property="BorderBrush" Value="#FFD8D8D8" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="12" />
+    </Style>
+
+    <Style Selector="Border.chromePanel">
+      <Setter Property="Background" Value="#FFF5F5F5" />
+      <Setter Property="BorderBrush" Value="#FFD8D8D8" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="10" />
+    </Style>
+
+    <Style Selector="Border.catalogCard">
+      <Setter Property="Background" Value="#FFF9F9F9" />
+      <Setter Property="BorderBrush" Value="#FFE1E1E1" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="10" />
+      <Setter Property="Padding" Value="14" />
+      <Setter Property="Margin" Value="0,0,0,12" />
+    </Style>
+
+    <Style Selector="Border.imagePlaceholder">
+      <Setter Property="Width" Value="120" />
+      <Setter Property="Height" Value="120" />
+      <Setter Property="Background" Value="#FFF1F1F1" />
+      <Setter Property="BorderBrush" Value="#FFD5D5D5" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="8" />
+    </Style>
+
+    <Style Selector="TextBlock.cardTitle">
+      <Setter Property="FontSize" Value="16" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Foreground" Value="#FF202020" />
+    </Style>
+
+    <Style Selector="TextBlock.cardDescription">
+      <Setter Property="FontSize" Value="13" />
+      <Setter Property="Foreground" Value="#FF5F5F5F" />
+      <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <Style Selector="TextBlock.mutedText">
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="Foreground" Value="#FF777777" />
+    </Style>
+
+    <Style Selector="Border.badge">
+      <Setter Property="Background" Value="#FF202020" />
+      <Setter Property="CornerRadius" Value="999" />
+      <Setter Property="Padding" Value="10,4" />
+    </Style>
+
+    <Style Selector="TextBlock.badgeText">
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="FontSize" Value="11" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style Selector="Button">
+      <Setter Property="MinHeight" Value="34" />
+      <Setter Property="Padding" Value="14,8" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="Background" Value="#FFF2F2F2" />
+      <Setter Property="Foreground" Value="#FF202020" />
+      <Setter Property="BorderBrush" Value="#FFD0D0D0" />
+      <Setter Property="BorderThickness" Value="1" />
+    </Style>
+
+    <Style Selector="Button:hover">
+      <Setter Property="Background" Value="#FFEAEAEA" />
+    </Style>
+
+    <Style Selector="Button.primary">
+      <Setter Property="Background" Value="#FF202020" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="BorderBrush" Value="#FF202020" />
+    </Style>
+
+    <Style Selector="Button.primary:hover">
+      <Setter Property="Background" Value="#FF2C2C2C" />
+    </Style>
+
+    <Style Selector="Button.destructive">
+      <Setter Property="Background" Value="#FFFDECEC" />
+      <Setter Property="Foreground" Value="#FF9A1F1F" />
+      <Setter Property="BorderBrush" Value="#FFD6A7A7" />
+    </Style>
+
+    <Style Selector="Button.chromeButton">
+      <Setter Property="MinWidth" Value="96" />
+      <Setter Property="Height" Value="34" />
+      <Setter Property="CornerRadius" Value="6" />
+    </Style>
+
+    <Style Selector="TextBox">
+      <Setter Property="MinHeight" Value="36" />
+      <Setter Property="Padding" Value="10,8" />
+      <Setter Property="Background" Value="White" />
+      <Setter Property="Foreground" Value="#FF202020" />
+      <Setter Property="BorderBrush" Value="#FFD0D0D0" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="8" />
+    </Style>
+
+    <Style Selector="ComboBox">
+      <Setter Property="MinHeight" Value="36" />
+      <Setter Property="Padding" Value="10,6" />
+      <Setter Property="Background" Value="White" />
+      <Setter Property="Foreground" Value="#FF202020" />
+      <Setter Property="BorderBrush" Value="#FFD0D0D0" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="8" />
+    </Style>
+
+    <Style Selector="CheckBox">
+      <Setter Property="Foreground" Value="#FF202020" />
+    </Style>
+
+    <Style Selector="ListBox">
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style Selector="ListBoxItem">
+      <Setter Property="Padding" Value="0" />
+      <Setter Property="Margin" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <Style Selector="ScrollViewer">
+      <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+    </Style>
+  </Application.Styles>
+
+  <Application.DataTemplates>
+    <DataTemplate DataType="viewModels:ServicesViewModel">
+      <views:ServicesView />
+    </DataTemplate>
+
+    <DataTemplate DataType="viewModels:CollectionsViewModel">
+      <views:CollectionsView />
+    </DataTemplate>
+
+    <DataTemplate DataType="viewModels:DirectionsViewModel">
+      <views:DirectionsView />
+    </DataTemplate>
+  </Application.DataTemplates>
 </Application>

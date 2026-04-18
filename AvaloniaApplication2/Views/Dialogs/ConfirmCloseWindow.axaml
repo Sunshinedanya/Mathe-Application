@@ -1,0 +1,72 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="AvaloniaApplication2.Views.Dialogs.ConfirmCloseWindow"
+        Width="360"
+        Height="180"
+        CanResize="False"
+        SystemDecorations="None"
+        WindowStartupLocation="CenterOwner"
+        Background="#FFF8F8F8"
+        TransparencyLevelHint="None"
+        Title="Подтверждение закрытия">
+  <Border BorderBrush="#FF2F2F2F"
+          BorderThickness="1"
+          CornerRadius="10"
+          Background="#FFF8F8F8"
+          Padding="0">
+    <Grid RowDefinitions="44,*,56">
+      <Border Grid.Row="0"
+              Background="#FF202020"
+              CornerRadius="10,10,0,0"
+              Padding="16,0">
+        <TextBlock VerticalAlignment="Center"
+                   Foreground="White"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Text="Подтверждение" />
+      </Border>
+
+      <StackPanel Grid.Row="1"
+                  Margin="20,16,20,8"
+                  Spacing="10">
+        <TextBlock Text="Вы действительно хотите закрыть приложение?"
+                   FontSize="15"
+                   FontWeight="SemiBold"
+                   Foreground="#FF222222"
+                   TextWrapping="Wrap" />
+
+        <TextBlock Text="Несохранённые изменения могут быть потеряны."
+                   FontSize="13"
+                   Foreground="#FF666666"
+                   TextWrapping="Wrap" />
+      </StackPanel>
+
+      <Grid Grid.Row="2"
+            ColumnDefinitions="*,Auto,Auto"
+            Margin="16,0,16,16">
+        <Button Grid.Column="1"
+                Name="cancelButton"
+                Width="96"
+                Height="34"
+                Margin="0,0,10,0"
+                Background="#FFEAEAEA"
+                Foreground="#FF222222"
+                BorderBrush="#FFBDBDBD"
+                BorderThickness="1"
+                Click="CancelButton_OnClick"
+                Content="Нет" />
+
+        <Button Grid.Column="2"
+                Name="confirmButton"
+                Width="96"
+                Height="34"
+                Background="#FF222222"
+                Foreground="White"
+                BorderBrush="#FF222222"
+                BorderThickness="1"
+                Click="ConfirmButton_OnClick"
+                Content="Да" />
+      </Grid>
+    </Grid>
+  </Border>
+</Window>
