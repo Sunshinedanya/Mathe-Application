@@ -254,25 +254,6 @@
           </Border>
         </Grid>
       </Grid>
-
-      <Border Grid.Row="2"
-              Background="#FFF7F7F7"
-              BorderBrush="#FFD3D3D3"
-              BorderThickness="0,1,0,0"
-              Padding="14,0">
-        <Grid ColumnDefinitions="*,Auto">
-          <TextBlock VerticalAlignment="Center"
-                     FontSize="12"
-                     Foreground="#FF666666"
-                     Text="Lavka «Матье» • Avalonia • PostgreSQL • Entity Framework" />
-
-          <TextBlock Grid.Column="1"
-                     VerticalAlignment="Center"
-                     FontSize="12"
-                     Foreground="#FF666666"
-                     Text="{Binding StatusMessage}" />
-        </Grid>
-      </Border>
     </Grid>
   </Border>
 </Window>

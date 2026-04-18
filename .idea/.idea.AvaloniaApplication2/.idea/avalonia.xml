@@ -4,6 +4,9 @@
     <option name="projectPerEditor">
       <map>
         <entry key="AvaloniaApplication2/MainWindow.axaml" value="AvaloniaApplication2/AvaloniaApplication2.csproj" />
+        <entry key="AvaloniaApplication2/Views/CollectionsView.axaml" value="AvaloniaApplication2/AvaloniaApplication2.csproj" />
+        <entry key="AvaloniaApplication2/Views/Dialogs/ConfirmCloseWindow.axaml" value="AvaloniaApplication2/AvaloniaApplication2.csproj" />
+        <entry key="AvaloniaApplication2/Views/DirectionsView.axaml" value="AvaloniaApplication2/AvaloniaApplication2.csproj" />
       </map>
     </option>
   </component>
